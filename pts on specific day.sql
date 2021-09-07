@@ -1,0 +1,11 @@
+SELECT *
+FROM BPS_Patients
+WHERE StatusText = 'Active'
+AND InternalID IN (SELECT internalid
+    FROM appointments a
+    INNER JOIN APPOINTMENTTYPES at
+    ON a.APPOINTMENTTYPE = at.APPOINTMENTCODE
+    WHERE a.RECORDSTATUS = 1
+    AND DESCRIPTION LIKE '%Pfizer%'
+    AND APPOINTMENTDATE = '20210907')
+ORDER BY Surname, Firstname
